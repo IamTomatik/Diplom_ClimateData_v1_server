@@ -2,14 +2,14 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
-from django.contrib.auth import authenticate
+
 from .models import User
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 
 class RegisterView(generics.CreateAPIView):
     """Регистрация нового пользователя"""
     queryset = User.objects.all()
-    permission_classes = [permissions.AllowAny]  # доступно всем
+    permission_classes = [permissions.AllowAny]  
     serializer_class = RegisterSerializer
 
 class LoginView(APIView):
@@ -23,6 +23,7 @@ class LoginView(APIView):
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 'token': token.key,
+                 'user_id': user.id, 
                 'user': UserSerializer(user).data
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

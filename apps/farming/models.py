@@ -1,6 +1,6 @@
 from django.db import models
 from apps.users.models import User
-from apps.climate.models import City
+
 
 class Crop(models.Model):
     """Культура"""
