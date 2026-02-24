@@ -5,7 +5,7 @@ class CropSerializer(serializers.ModelSerializer):
     """Сериализатор для культур"""
     class Meta:
         model = Crop
-        fields = ['id', 'name', 'category', 'photo']
+        fields = ['crop_ID', 'name', 'category', 'imageUri']
 
 class VarietySerializer(serializers.ModelSerializer):
     """Сериализатор для сортов"""
@@ -14,7 +14,7 @@ class VarietySerializer(serializers.ModelSerializer):
     class Meta:
         model = Variety
         fields = [
-            'id', 'crop', 'crop_name', 'name', 'photo',
+            'variety_ID', 'crop', 'crop_name', 'name', 'imageUri',
             'optimal_temp_min', 'optimal_temp_max', 'optimal_humidity',
             'soil_humidity', 'growth_days', 'description'
         ]
@@ -24,10 +24,10 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = [
-            'id', 'name', 'region', 'area', 'soil_type',
-            'description', 'location_type', 'photo', 'latitude', 'longitude'
+            'locations_ID', 'name', 'region', 'area', 'soil_type',
+            'description', 'location_type', 'imageUri'
         ]
-        read_only_fields = ['id']
+        read_only_fields = ['locations_ID']
 
 class PlantingSerializer(serializers.ModelSerializer):
     """Сериализатор для посадок"""
@@ -38,11 +38,11 @@ class PlantingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Planting
         fields = [
-            'id', 'name', 'crop', 'crop_name', 'variety', 'variety_name',
+            'planting_ID', 'name', 'crop', 'crop_name', 'variety', 'variety_name',
             'location', 'location_name', 'planted_date', 'expected_harvest_date',
-            'area', 'status', 'photo'
+            'area', 'status', 'imageUri'
         ]
-        read_only_fields = ['id']
+        read_only_fields = ['planting_ID']
 
 class RecommendationSerializer(serializers.ModelSerializer):
     """Сериализатор для рекомендаций"""
@@ -51,6 +51,6 @@ class RecommendationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recommendation
         fields = [
-            'id', 'recommendation_type', 'message', 'priority',
+            'recommendations_ID', 'type', 'message', 'priority',
             'generated_date', 'is_completed', 'planting', 'planting_name'
         ]

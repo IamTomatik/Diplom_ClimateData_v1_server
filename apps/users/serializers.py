@@ -7,8 +7,9 @@ class UserSerializer(serializers.ModelSerializer):
     """Сериализатор для модели пользователя"""
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'phone', 'role', 'city', 'photo']
-        read_only_fields = ['id', 'role']
+
+        fields = ['user_ID', 'email', 'name', 'role', 'city_id', 'photo_uri']
+        read_only_fields = ['user_ID', 'role']
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -16,8 +17,8 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'password2', 'city']
-        # username = то что в Android называется 'name'
+ 
+        fields = ['name', 'email', 'password', 'password2', 'city_id']
     
     def validate(self, data):
         if data['password'] != data['password2']:
@@ -26,30 +27,34 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         validated_data.pop('password2')
+     
         user = User.objects.create_user(
-            username=validated_data['username'],
+            username=validated_data['name'], 
             email=validated_data['email'],
             password=validated_data['password'],
-            city=validated_data.get('city')
+            name=validated_data['name'], 
+            city_id=validated_data.get('city_id')
         )
         return user
 
 class LoginSerializer(serializers.Serializer):
     """Сериализатор для входа"""
-    username = serializers.CharField(required=True)
-    password = serializers.CharField(write_only=True, required=True, style={'input_type': 'password'})
+    email = serializers.CharField(required=False)  # добавить
+    username = serializers.CharField(required=False)  # оставить
+    password = serializers.CharField(write_only=True, required=True)
     
     def validate(self, attrs):
-        """Проверяем учетные данные"""
-        username = attrs.get('username')
         password = attrs.get('password')
         
-        if username and password:
-            user = authenticate(username=username, password=password)
-            if not user:
-                raise serializers.ValidationError("Неверный логин или пароль")
+        if 'email' in attrs and attrs['email']:
+            user = authenticate(username=attrs['email'], password=password)
+        elif 'username' in attrs and attrs['username']:
+            user = authenticate(username=attrs['username'], password=password)
         else:
-            raise serializers.ValidationError("Логин и пароль обязательны")
+            raise serializers.ValidationError("Email или логин обязательны")
+        
+        if not user:
+            raise serializers.ValidationError("Неверный email или пароль")
         
         attrs['user'] = user
         return attrs

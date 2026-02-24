@@ -1,12 +1,12 @@
 from django.contrib import admin
 from .models import (
-    Crop, Variety, Location, Planting, 
+    Crop, Variety, Location, Planting,
     FavoriteCrop, DiseaseDetection, Recommendation, History
 )
 
 @admin.register(Crop)
 class CropAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'category']
+    list_display = ['crop_ID', 'name', 'category']
     list_filter = ['category']
     search_fields = ['name']
     ordering = ['name']
@@ -14,20 +14,20 @@ class CropAdmin(admin.ModelAdmin):
 
 @admin.register(Variety)
 class VarietyAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'crop', 'optimal_temp_min', 'optimal_temp_max', 'growth_days']
+    list_display = ['variety_ID', 'name', 'crop', 'optimal_temp_min', 'optimal_temp_max', 'growth_days']
     list_filter = ['crop']
     search_fields = ['name', 'crop__name']
     ordering = ['crop', 'name']
     
     fieldsets = (
         ('Основная информация', {
-            'fields': ('crop', 'name', 'photo', 'description')
+            'fields': ('crop', 'name', 'imageUri', 'description')
         }),
         ('Климатические параметры', {
             'fields': ('optimal_temp_min', 'optimal_temp_max', 'optimal_humidity', 'soil_humidity', 'growth_days')
         }),
         ('Сроки посадки', {
-            'fields': ('recommended_seedling_time', 'recommended_open_ground_time', 
+            'fields': ('recommended_seedling_time', 'recommended_open_ground_time',
                       'recommended_greenhouse_time', 'seedling_age')
         }),
         ('Агротехника', {
@@ -42,10 +42,9 @@ class VarietyAdmin(admin.ModelAdmin):
         }),
     )
 
-
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'user', 'region', 'location_type', 'soil_type']
+    list_display = ['locations_ID', 'name', 'user', 'region', 'location_type', 'soil_type']
     list_filter = ['location_type', 'soil_type']
     search_fields = ['name', 'user__username', 'region']
     ordering = ['user', 'name']
@@ -53,7 +52,7 @@ class LocationAdmin(admin.ModelAdmin):
 
 @admin.register(Planting)
 class PlantingAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'user', 'crop', 'variety', 'location', 'planted_date', 'status']
+    list_display = ['planting_ID', 'name', 'user', 'crop', 'variety', 'location', 'planted_date', 'status']
     list_filter = ['status', 'crop']
     search_fields = ['name', 'user__username', 'crop__name']
     ordering = ['-planted_date']
@@ -61,7 +60,7 @@ class PlantingAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ('Основное', {
-            'fields': ('user', 'name', 'crop', 'variety', 'location', 'status', 'photo')
+            'fields': ('user', 'name', 'crop', 'variety', 'location', 'status', 'imageUri')  # photo → imageUri
         }),
         ('Даты', {
             'fields': ('planted_date', 'expected_harvest_date')
@@ -70,7 +69,6 @@ class PlantingAdmin(admin.ModelAdmin):
             'fields': ('area',)
         }),
     )
-
 
 @admin.register(FavoriteCrop)
 class FavoriteCropAdmin(admin.ModelAdmin):
@@ -81,22 +79,23 @@ class FavoriteCropAdmin(admin.ModelAdmin):
 
 @admin.register(DiseaseDetection)
 class DiseaseDetectionAdmin(admin.ModelAdmin):
-    list_display = ['id', 'planting', 'detected_disease', 'confidence', 'detection_date']
+    list_display = ['disease_detection_ID', 'planting', 'detected_disease', 'confidence', 'detection_date']
     list_filter = ['detected_disease']
     search_fields = ['planting__name', 'detected_disease']
 
 
+
 @admin.register(Recommendation)
 class RecommendationAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'recommendation_type', 'priority', 'generated_date', 'is_completed']
-    list_filter = ['recommendation_type', 'priority', 'is_completed']
+    list_display = ['recommendations_ID', 'user', 'type', 'priority', 'generated_date', 'is_completed']
+    list_filter = ['type', 'priority', 'is_completed']
     search_fields = ['user__username', 'message']
     ordering = ['-generated_date']
 
 
 @admin.register(History)
 class HistoryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'message', 'timestamp']
+    list_display = ['hist_ID', 'user', 'message', 'timestamp']
     list_filter = ['date']
     search_fields = ['user__username', 'message']
     ordering = ['-timestamp']

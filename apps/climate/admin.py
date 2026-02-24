@@ -1,21 +1,15 @@
 from django.contrib import admin
-from .models import City, WeatherData, ClimateNorm
+from .models import City, WeatherData
 
 @admin.register(City)
 class CityAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'region', 'latitude', 'longitude']
+    list_display = ['city_ID', 'name', 'region', 'lat', 'lon']
     search_fields = ['name', 'region']
     ordering = ['name']
 
 @admin.register(WeatherData)
 class WeatherDataAdmin(admin.ModelAdmin):
-    list_display = ['id', 'city', 'date', 'temperature', 'humidity', 'is_forecast']
+    list_display = ['weather_data_ID', 'city', 'date', 'temperature', 'humidity', 'is_forecast']
     list_filter = ['city', 'is_forecast']
     search_fields = ['city__name']
     ordering = ['-date']
-
-@admin.register(ClimateNorm)
-class ClimateNormAdmin(admin.ModelAdmin):
-    list_display = ['id', 'city', 'month', 'avg_temperature', 'avg_humidity']
-    list_filter = ['city', 'month']
-    ordering = ['city', 'month']

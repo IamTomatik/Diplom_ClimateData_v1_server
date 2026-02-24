@@ -15,7 +15,7 @@ class VarietyViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
-        """Фильтр по культуре, если передан параметр crop_id"""
+        """Фильтр по культуре, если передан параметр crop"""
         queryset = Variety.objects.all()
         crop_id = self.request.query_params.get('crop', None)
         if crop_id:
