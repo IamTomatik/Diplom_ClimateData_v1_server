@@ -3,17 +3,16 @@ from django.db import models
 
 class User(AbstractUser):
     """Пользователь системы"""
- 
-    user_ID = models.AutoField(primary_key=True)  # добавить
-    name = models.CharField(max_length=150)  # добавить (дублирует username?)
+    user_ID = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=150)
+    email = models.EmailField(unique=True)  # важно! уникальный
+    photo_uri = models.ImageField(upload_to='users/', null=True, blank=True)
+    role = models.CharField(max_length=20, default='user')
+    city_id = models.ForeignKey('climate.City', on_delete=models.SET_NULL, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     
-    photo_uri = models.ImageField(upload_to='users/', null=True, blank=True, verbose_name="Фото")  # переименовать
-    role = models.CharField(max_length=20, default='user', verbose_name="Роль")
-    
-    # Связь с городом
-    city_id = models.ForeignKey('climate.City', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Город", db_column='city_id')
-    
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата регистрации")
+    USERNAME_FIELD = 'email' 
+    REQUIRED_FIELDS = ['name']  
     
     class Meta:
         db_table = 'users'  

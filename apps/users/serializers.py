@@ -39,8 +39,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(serializers.Serializer):
     """Сериализатор для входа"""
-    email = serializers.CharField(required=False)  # добавить
-    username = serializers.CharField(required=False)  # оставить
+    email = serializers.CharField(required=False)  
+    username = serializers.CharField(required=False)
     password = serializers.CharField(write_only=True, required=True)
     
     def validate(self, attrs):
