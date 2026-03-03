@@ -2,9 +2,7 @@ from django.db import models
 
 class City(models.Model):
     """Город/населенный пункт"""
-    city_ID = models.AutoField(primary_key=True)  
-    loc_ID = models.IntegerField(blank=True, null=True)  
-    
+    city_ID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, verbose_name="Название города")
     region = models.CharField(max_length=100, blank=True, verbose_name="Регион/область")
     lat = models.FloatField(verbose_name="Широта")  
@@ -20,12 +18,12 @@ class City(models.Model):
         """Преобразование в формат Android"""
         return {
             'city_ID': self.city_ID,
-            'loc_ID': self.loc_ID,
             'name': self.name,
             'lat': self.lat,
             'lon': self.lon,
             'region': self.region
         }
+
 
 
 class WeatherData(models.Model):
