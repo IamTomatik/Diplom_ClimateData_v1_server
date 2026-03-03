@@ -114,8 +114,8 @@ class Command(BaseCommand):
                     name=city_data["name"],
                     defaults={
                         "region": region,
-                        "latitude": city_data["lat"],
-                        "longitude": city_data["lon"]
+                        "lat": city_data["lat"],
+                        "lon": city_data["lon"]
                     }
                 )
                 if is_new:

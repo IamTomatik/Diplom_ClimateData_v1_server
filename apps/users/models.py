@@ -5,7 +5,7 @@ class User(AbstractUser):
     """Пользователь системы"""
     user_ID = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
-    email = models.EmailField(unique=True)  # важно! уникальный
+    email = models.EmailField(unique=True)  
     photo_uri = models.ImageField(upload_to='users/', null=True, blank=True)
     role = models.CharField(max_length=20, default='user')
     city_id = models.ForeignKey('climate.City', on_delete=models.SET_NULL, null=True, blank=True)

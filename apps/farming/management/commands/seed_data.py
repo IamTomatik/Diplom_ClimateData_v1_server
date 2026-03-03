@@ -66,7 +66,7 @@ class Command(BaseCommand):
         if cucumbers:
             varieties_data.extend([
                 {
-                    "crop": cucumbers,
+                    "cropID": cucumbers.crop_ID,
                     "name": "Гибридный",
                     "optimal_temp_min": 18.0,
                     "optimal_temp_max": 28.0,
@@ -90,7 +90,7 @@ class Command(BaseCommand):
                     "disease_prevention": "Опрыскивание фитоспорином каждые 10-14 дней"
                 },
                 {
-                    "crop": cucumbers,
+                    "cropID": cucumbers.crop_ID,
                     "name": "Апрельский",
                     "optimal_temp_min": 16.0,
                     "optimal_temp_max": 26.0,
@@ -114,7 +114,7 @@ class Command(BaseCommand):
                     "disease_prevention": "Профилактическое опрыскивание"
                 },
                 {
-                    "crop": cucumbers,
+                    "cropID": cucumbers.crop_ID,
                     "name": "Зозуля",
                     "optimal_temp_min": 20.0,
                     "optimal_temp_max": 30.0,
@@ -138,7 +138,7 @@ class Command(BaseCommand):
                     "disease_prevention": "Биопрепараты"
                 },
                 {
-                    "crop": cucumbers,
+                    "cropID": cucumbers.crop_ID,
                     "name": "Конкурент",
                     "optimal_temp_min": 17.0,
                     "optimal_temp_max": 27.0,
@@ -168,7 +168,7 @@ class Command(BaseCommand):
         if tomatoes:
             varieties_data.extend([
                 {
-                    "crop": tomatoes,
+                    "cropID": tomatoes.crop_ID,
                     "name": "Бычье сердце",
                     "optimal_temp_min": 20.0,
                     "optimal_temp_max": 30.0,
@@ -192,7 +192,7 @@ class Command(BaseCommand):
                     "disease_prevention": "Фитоспорин"
                 },
                 {
-                    "crop": tomatoes,
+                    "cropID": tomatoes.crop_ID,
                     "name": "Черри",
                     "optimal_temp_min": 22.0,
                     "optimal_temp_max": 32.0,
@@ -216,7 +216,7 @@ class Command(BaseCommand):
                     "disease_prevention": "Кальциевая селитра"
                 },
                 {
-                    "crop": tomatoes,
+                    "cropID": tomatoes.crop_ID,
                     "name": "Де Барао",
                     "optimal_temp_min": 18.0,
                     "optimal_temp_max": 28.0,
@@ -240,7 +240,7 @@ class Command(BaseCommand):
                     "disease_prevention": "Проветривание"
                 },
                 {
-                    "crop": tomatoes,
+                    "cropID": tomatoes.crop_ID,
                     "name": "Розовый гигант",
                     "optimal_temp_min": 19.0,
                     "optimal_temp_max": 29.0,
@@ -264,7 +264,7 @@ class Command(BaseCommand):
                     "disease_prevention": "Медный купорос"
                 },
                 {
-                    "crop": tomatoes,
+                    "cropID": tomatoes.crop_ID,
                     "name": "Санька",
                     "optimal_temp_min": 15.0,
                     "optimal_temp_max": 25.0,
@@ -293,7 +293,7 @@ class Command(BaseCommand):
         potato = crops.get("Картофель")
         if potato:
             varieties_data.append({
-                "crop": potato,
+                "cropID": potato.crop_ID,
                 "name": "Невский",
                 "optimal_temp_min": 12.0,
                 "optimal_temp_max": 25.0,
@@ -321,7 +321,7 @@ class Command(BaseCommand):
         cabbage = crops.get("Капуста белокачанная")
         if cabbage:
             varieties_data.append({
-                "crop": cabbage,
+                "cropID": cabbage.crop_ID,
                 "name": "Слава",
                 "optimal_temp_min": 10.0,
                 "optimal_temp_max": 20.0,
@@ -349,7 +349,7 @@ class Command(BaseCommand):
         strawberry = crops.get("Клубника")
         if strawberry:
             varieties_data.append({
-                "crop": strawberry,
+                "cropID": strawberry.crop_ID,
                 "name": "Гигантелла",
                 "optimal_temp_min": 15.0,
                 "optimal_temp_max": 25.0,

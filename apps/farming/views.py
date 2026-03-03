@@ -6,13 +6,13 @@ class CropViewSet(viewsets.ReadOnlyModelViewSet):
     """Просмотр культур (только чтение)"""
     queryset = Crop.objects.all()
     serializer_class = CropSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
 class VarietyViewSet(viewsets.ReadOnlyModelViewSet):
     """Просмотр сортов (только чтение)"""
     queryset = Variety.objects.all()
     serializer_class = VarietySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     
     def get_queryset(self):
         """Фильтр по культуре, если передан параметр crop"""

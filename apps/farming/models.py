@@ -32,8 +32,8 @@ class Variety(models.Model):
     growth_days = models.IntegerField()
     
     # Текстовые поля
-    risk_factors = models.TextField(blank=True)
-    description = models.TextField(blank=True)
+    risk_factors = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     recommended_seedling_time = models.TextField(blank=True)
     recommended_open_ground_time = models.TextField(blank=True)
     recommended_greenhouse_time = models.TextField(blank=True)
@@ -57,29 +57,31 @@ class Variety(models.Model):
 class Location(models.Model):
     """Участок/теплица пользователя"""
     SOIL_TYPES = [
-        ('chernozem', 'Чернозем'),
-        ('clay', 'Глина'),
-        ('sandy', 'Песок'),
-        ('loam', 'Суглинок'),
-        ('peat', 'Торф'),
-        ('podzolic', 'Подзолистая'),
-        ('gray_forest', 'Серая лесная'),
-        ('chestnut', 'Каштановая'),
-        ('saline', 'Засоленная'),
-        ('rocky', 'Каменистая'),
+        ('alluvial', 'Аллювиальные (речных долин) почвы'),
+        ('podzolic', 'Дерново-подзолистые почвы'),
+        ('forest', 'Лёсовые почвы'),
+        ('sandy', 'Песчаные почвы'),
+        ('podzol', 'Подзолистые почвы'),
+        ('saline', 'Серозёмы'),
+        ('gray_forest', 'Серые лесные почвы'),
+        ('solonetz', 'Солонцы'),
+        ('loam', 'Супесчаные и суглинистые почвы'),
+        ('peat', 'Торфяные почвы (болотные)'),
+        ('chernozem', 'Чернозём типичный'),
+        ('chestnut', 'Чернозём южный (каштановый)'),
     ]
     
     LOCATION_TYPES = [
-        ('open_ground', 'Открытый грунт'),
-        ('greenhouse', 'Теплица'),
-        ('pot', 'Горшок/контейнер'),
-        ('raised_bed', 'Высокая грядка'),
-        ('hydroponics', 'Гидропоника'),
+        ('open_ground', 'поле'),
+        ('greenhouse', 'теплица'),
+        ('raised_bed', 'грядка'),
+        ('other', 'другое'),
     ]
     
     locations_ID = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='locations')
-    
+    city = models.ForeignKey('climate.City', on_delete=models.SET_NULL, null=True, blank=True, related_name='locations')
+
     name = models.CharField(max_length=100)
     region = models.CharField(max_length=100)
     area = models.FloatField(null=True, blank=True)
