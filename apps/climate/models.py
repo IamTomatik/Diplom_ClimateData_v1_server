@@ -1,4 +1,5 @@
 from django.db import models
+from math import radians, cos, sin, asin, sqrt
 
 class City(models.Model):
     """Город/населенный пункт"""
@@ -24,6 +25,24 @@ class City(models.Model):
             'region': self.region
         }
 
+def haversine(lat1, lon1, lat2, lon2):
+    """Расчет расстояния по формуле гаверсинуса"""
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a))
+    r = 6371  # Радиус Земли
+    return c * r
+
+def get_nearest_city(user_lat, user_lon):
+    """Возвращает ближайший город из БД"""
+    cities = City.objects.all()
+    if not cities.exists():
+        return None
+    nearest = min(cities, key=lambda c: haversine(user_lat, user_lon, c.lat, c.lon))
+    return nearest
+
 
 
 class WeatherData(models.Model):
@@ -47,3 +66,4 @@ class WeatherData(models.Model):
         
     def __str__(self):
         return f"{self.city.name} - {self.date}: {self.temperature}°C"
+    
